@@ -536,6 +536,89 @@
       font-size: 0.73rem; color: rgba(255,255,255,0.35);
     }
 
+    /* ── CHAT WIDGET ── */
+    .chat-toggle {
+      position: fixed; bottom: 24px; right: 24px; z-index: 300;
+      width: 60px; height: 60px; border-radius: 50%;
+      background: var(--black); color: var(--white);
+      border: none; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 6px 16px rgba(0,0,0,0.18), 0 16px 40px rgba(0,0,0,0.22);
+      transition: transform 0.25s cubic-bezier(.16,.84,.44,1), box-shadow 0.3s ease;
+    }
+    .chat-toggle:hover { transform: translateY(-2px) scale(1.04); box-shadow: 0 10px 24px rgba(0,0,0,0.22), 0 22px 48px rgba(0,0,0,0.26); }
+    .chat-toggle:focus-visible { outline: 2px solid var(--gold2); outline-offset: 3px; }
+    .chat-toggle svg { width: 26px; height: 26px; }
+    .chat-toggle .icon-close { display: none; }
+    .chat-toggle.open .icon-chat { display: none; }
+    .chat-toggle.open .icon-close { display: block; }
+
+    .chat-panel {
+      position: fixed; bottom: 96px; right: 24px; z-index: 300;
+      width: 380px; max-width: calc(100vw - 32px);
+      height: 540px; max-height: calc(100vh - 140px);
+      background: var(--white);
+      border: 1px solid #ece5da;
+      box-shadow: 0 12px 28px rgba(0,0,0,0.12), 0 32px 64px rgba(0,0,0,0.16);
+      display: flex; flex-direction: column;
+      opacity: 0; transform: translateY(16px) scale(0.98);
+      pointer-events: none;
+      transition: opacity 0.25s cubic-bezier(.16,.84,.44,1), transform 0.25s cubic-bezier(.16,.84,.44,1);
+    }
+    .chat-panel.open { opacity: 1; transform: translateY(0) scale(1); pointer-events: auto; }
+
+    .chat-header {
+      background: var(--black); color: var(--white);
+      padding: 1.1rem 1.4rem;
+      display: flex; flex-direction: column; gap: 0.15rem;
+      flex-shrink: 0;
+    }
+    .chat-header strong { font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; font-weight: 500; }
+    .chat-header span { font-size: 0.68rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gold); }
+
+    .chat-messages {
+      flex: 1; overflow-y: auto;
+      padding: 1.2rem 1.2rem;
+      display: flex; flex-direction: column; gap: 0.9rem;
+      background: var(--cream);
+    }
+    .chat-msg { max-width: 84%; font-size: 0.84rem; line-height: 1.6; padding: 0.7rem 0.95rem; }
+    .chat-msg.bot { align-self: flex-start; background: var(--white); border: 1px solid #ece5da; color: var(--dark); }
+    .chat-msg.user { align-self: flex-end; background: var(--black); color: var(--white); }
+    .chat-msg.typing { align-self: flex-start; background: var(--white); border: 1px solid #ece5da; color: #999; font-style: italic; }
+
+    .chat-input-row {
+      display: flex; gap: 0.6rem; padding: 0.9rem;
+      border-top: 1px solid #ece5da; flex-shrink: 0; background: var(--white);
+    }
+    .chat-input-row input {
+      flex: 1; font-family: 'Montserrat', sans-serif; font-size: 0.85rem;
+      color: var(--dark); border: 1px solid #ddd; padding: 10px 14px;
+      outline: none; transition: border-color 0.2s;
+    }
+    .chat-input-row input:focus { border-color: var(--gold2); }
+    .chat-input-row button {
+      flex-shrink: 0; width: 42px; height: 42px;
+      background: var(--black); color: var(--white); border: none; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: background 0.2s;
+    }
+    .chat-input-row button:hover { background: #222; }
+    .chat-input-row button:disabled { background: #ccc; cursor: default; }
+    .chat-input-row svg { width: 18px; height: 18px; }
+
+    @media (prefers-reduced-motion: reduce) {
+      .chat-toggle, .chat-panel { transition: none; }
+    }
+
+    @media (max-width: 480px) {
+      .chat-panel {
+        bottom: 88px; right: 16px;
+        width: calc(100vw - 32px); height: calc(100vh - 160px);
+      }
+      .chat-toggle { bottom: 16px; right: 16px; }
+    }
+
     /* ── RESPONSIVE ── */
     @media (max-width: 960px) {
       .nav-links, nav .btn { display: none; }
@@ -1152,6 +1235,29 @@
 </footer>
 
 
+<!-- ═══ CHAT WIDGET ═══ -->
+<button class="chat-toggle" id="chatToggle" aria-label="Отвори чат с асистент" aria-expanded="false">
+  <svg class="icon-chat" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+  <svg class="icon-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+</button>
+
+<div class="chat-panel" id="chatPanel" role="dialog" aria-label="Чат с асистент на Simona Brows">
+  <div class="chat-header">
+    <strong>Simona Brows</strong>
+    <span>Виртуален асистент</span>
+  </div>
+  <div class="chat-messages" id="chatMessages">
+    <div class="chat-msg bot">Здравей! Аз съм виртуалният асистент на Simona Brows. Питай ме за услуги, курсове, цени на процедури или как да се запишеш.</div>
+  </div>
+  <form class="chat-input-row" id="chatForm">
+    <input type="text" id="chatInput" placeholder="Напиши въпрос..." autocomplete="off" maxlength="500">
+    <button type="submit" aria-label="Изпрати">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+    </button>
+  </form>
+</div>
+
+
 <script>
   document.getElementById('enrollForm').addEventListener('submit', function(e) {
     e.preventDefault();
@@ -1301,6 +1407,79 @@
       });
     }
   }
+
+  // ── chat widget ──
+  (function () {
+    const toggle = document.getElementById('chatToggle');
+    const panel = document.getElementById('chatPanel');
+    const messagesEl = document.getElementById('chatMessages');
+    const form = document.getElementById('chatForm');
+    const input = document.getElementById('chatInput');
+
+    const history = [
+      { role: 'assistant', content: messagesEl.querySelector('.chat-msg').textContent },
+    ];
+
+    function addMessage(role, text) {
+      const div = document.createElement('div');
+      div.className = 'chat-msg ' + (role === 'user' ? 'user' : 'bot');
+      div.textContent = text;
+      messagesEl.appendChild(div);
+      messagesEl.scrollTop = messagesEl.scrollHeight;
+      return div;
+    }
+
+    function setOpen(open) {
+      panel.classList.toggle('open', open);
+      toggle.classList.toggle('open', open);
+      toggle.setAttribute('aria-expanded', String(open));
+      if (open) setTimeout(() => input.focus(), 200);
+    }
+
+    toggle.addEventListener('click', () => setOpen(!panel.classList.contains('open')));
+
+    document.addEventListener('click', (e) => {
+      if (panel.classList.contains('open') && !panel.contains(e.target) && !toggle.contains(e.target)) {
+        setOpen(false);
+      }
+    });
+
+    form.addEventListener('submit', async function (e) {
+      e.preventDefault();
+      const text = input.value.trim();
+      if (!text) return;
+
+      addMessage('user', text);
+      history.push({ role: 'user', content: text });
+      input.value = '';
+      input.disabled = true;
+
+      const typingEl = document.createElement('div');
+      typingEl.className = 'chat-msg typing';
+      typingEl.textContent = 'Пише...';
+      messagesEl.appendChild(typingEl);
+      messagesEl.scrollTop = messagesEl.scrollHeight;
+
+      try {
+        const res = await fetch('/.netlify/functions/chat', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ messages: history }),
+        });
+        const data = await res.json();
+        typingEl.remove();
+        const reply = res.ok ? data.reply : (data.error || 'Възникна грешка. Моля опитай отново.');
+        addMessage('bot', reply);
+        history.push({ role: 'assistant', content: reply });
+      } catch (err) {
+        typingEl.remove();
+        addMessage('bot', 'Възникна проблем с връзката. Моля опитай отново или пиши директно на 0893 006 402.');
+      } finally {
+        input.disabled = false;
+        input.focus();
+      }
+    });
+  })();
 </script>
 
 </body>
