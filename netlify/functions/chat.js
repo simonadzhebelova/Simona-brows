@@ -79,6 +79,14 @@ exports.handler = async (event) => {
     content: String(m.content || '').slice(0, 2000),
   }));
 
+  if (payload.debug) {
+    return {
+      statusCode: 200,
+      headers: NO_CACHE_HEADERS,
+      body: JSON.stringify({ rawBody: event.body, parsedMessages: payload.messages, trimmedHistory }),
+    };
+  }
+
   try {
     const response = await fetch('https://api.openai.com/v1/chat/completions', {
       method: 'POST',
