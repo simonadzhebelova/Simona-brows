@@ -44,15 +44,24 @@ Facebook: Simona Brows
 
 Ако клиент иска да запише час за услуга — насочи го към бутона "Запази час" (Fresha). Ако иска да се запише за курс — насочи го към формата в раздел "Запиши се" на сайта, или директно към телефон/имейл.`;
 
+const NO_CACHE_HEADERS = {
+  'Content-Type': 'application/json',
+  'Cache-Control': 'no-store, no-cache, must-revalidate, max-age=0',
+  'CDN-Cache-Control': 'no-store',
+  'Netlify-CDN-Cache-Control': 'no-store',
+  Pragma: 'no-cache',
+};
+
 exports.handler = async (event) => {
   if (event.httpMethod !== 'POST') {
-    return { statusCode: 405, body: 'Method Not Allowed' };
+    return { statusCode: 405, headers: NO_CACHE_HEADERS, body: 'Method Not Allowed' };
   }
 
   const apiKey = process.env.OPENAI_API_KEY;
   if (!apiKey) {
     return {
       statusCode: 500,
+      headers: NO_CACHE_HEADERS,
       body: JSON.stringify({ error: 'Чатботът все още не е конфигуриран. Моля свържете се директно на 0893 006 402.' }),
     };
   }
@@ -61,7 +70,7 @@ exports.handler = async (event) => {
   try {
     payload = JSON.parse(event.body || '{}');
   } catch {
-    return { statusCode: 400, body: JSON.stringify({ error: 'Invalid request' }) };
+    return { statusCode: 400, headers: NO_CACHE_HEADERS, body: JSON.stringify({ error: 'Invalid request' }) };
   }
 
   const history = Array.isArray(payload.messages) ? payload.messages : [];
@@ -90,6 +99,7 @@ exports.handler = async (event) => {
       console.error('OpenAI error:', response.status, errText);
       return {
         statusCode: 502,
+        headers: NO_CACHE_HEADERS,
         body: JSON.stringify({ error: 'Възникна проблем с връзката. Моля опитайте отново след малко.' }),
       };
     }
@@ -99,13 +109,14 @@ exports.handler = async (event) => {
 
     return {
       statusCode: 200,
-      headers: { 'Content-Type': 'application/json' },
+      headers: NO_CACHE_HEADERS,
       body: JSON.stringify({ reply }),
     };
   } catch (err) {
     console.error('Chat function error:', err);
     return {
       statusCode: 500,
+      headers: NO_CACHE_HEADERS,
       body: JSON.stringify({ error: 'Възникна неочаквана грешка. Моля опитайте отново.' }),
     };
   }
