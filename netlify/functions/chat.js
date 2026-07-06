@@ -68,7 +68,10 @@ exports.handler = async (event) => {
 
   let payload;
   try {
-    payload = JSON.parse(event.body || '{}');
+    const rawBody = event.isBase64Encoded
+      ? Buffer.from(event.body || '', 'base64').toString('utf-8')
+      : (event.body || '{}');
+    payload = JSON.parse(rawBody);
   } catch {
     return { statusCode: 400, headers: NO_CACHE_HEADERS, body: JSON.stringify({ error: 'Invalid request' }) };
   }
@@ -78,8 +81,6 @@ exports.handler = async (event) => {
     role: m.role === 'user' ? 'user' : 'assistant',
     content: String(m.content || '').slice(0, 2000),
   }));
-
-  const debugMode = payload.debug === true;
 
   try {
     const response = await fetch('https://api.openai.com/v1/chat/completions', {
@@ -108,19 +109,6 @@ exports.handler = async (event) => {
 
     const data = await response.json();
     const reply = data.choices?.[0]?.message?.content?.trim() || 'Извинявай, не успях да формулирам отговор. Опитай пак.';
-
-    if (debugMode) {
-      return {
-        statusCode: 200,
-        headers: NO_CACHE_HEADERS,
-        body: JSON.stringify({
-          sentMessages: [{ role: 'system', content: '(system prompt omitted, length=' + SYSTEM_PROMPT.length + ')' }, ...trimmedHistory],
-          openaiUsage: data.usage,
-          openaiModel: data.model,
-          reply,
-        }),
-      };
-    }
 
     return {
       statusCode: 200,
