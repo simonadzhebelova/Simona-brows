@@ -79,13 +79,7 @@ exports.handler = async (event) => {
     content: String(m.content || '').slice(0, 2000),
   }));
 
-  if (payload.debug) {
-    return {
-      statusCode: 200,
-      headers: NO_CACHE_HEADERS,
-      body: JSON.stringify({ rawBody: event.body, parsedMessages: payload.messages, trimmedHistory }),
-    };
-  }
+  const debugMode = payload.debug === true;
 
   try {
     const response = await fetch('https://api.openai.com/v1/chat/completions', {
@@ -114,6 +108,19 @@ exports.handler = async (event) => {
 
     const data = await response.json();
     const reply = data.choices?.[0]?.message?.content?.trim() || 'Извинявай, не успях да формулирам отговор. Опитай пак.';
+
+    if (debugMode) {
+      return {
+        statusCode: 200,
+        headers: NO_CACHE_HEADERS,
+        body: JSON.stringify({
+          sentMessages: [{ role: 'system', content: '(system prompt omitted, length=' + SYSTEM_PROMPT.length + ')' }, ...trimmedHistory],
+          openaiUsage: data.usage,
+          openaiModel: data.model,
+          reply,
+        }),
+      };
+    }
 
     return {
       statusCode: 200,
