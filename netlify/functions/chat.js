@@ -76,14 +76,6 @@ exports.handler = async (event) => {
     return { statusCode: 400, headers: NO_CACHE_HEADERS, body: JSON.stringify({ error: 'Invalid request' }) };
   }
 
-  if (payload.debug) {
-    return {
-      statusCode: 200,
-      headers: NO_CACHE_HEADERS,
-      body: JSON.stringify({ isBase64Encoded: event.isBase64Encoded, rawBodyPreview: (event.body || '').slice(0, 80), parsedMessages: payload.messages }),
-    };
-  }
-
   const history = Array.isArray(payload.messages) ? payload.messages : [];
   const trimmedHistory = history.slice(-12).map((m) => ({
     role: m.role === 'user' ? 'user' : 'assistant',
@@ -98,7 +90,7 @@ exports.handler = async (event) => {
         Authorization: `Bearer ${apiKey}`,
       },
       body: JSON.stringify({
-        model: 'gpt-4o',
+        model: 'gpt-4o-mini',
         messages: [{ role: 'system', content: SYSTEM_PROMPT }, ...trimmedHistory],
         temperature: 0.4,
         max_tokens: 400,
