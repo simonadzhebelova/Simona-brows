@@ -164,6 +164,15 @@ input:focus-visible, textarea:focus-visible {
 .steps strong { display: block; font-weight: 600; color: var(--black); margin-bottom: .15rem; }
 .steps span { color: var(--muted); font-size: .95rem; }
 
+/* ── Какво получаваш ── */
+.gets { display: grid; gap: 2.5rem; align-items: start; }
+.gets__photo img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; border-radius: 4px; }
+.gets__list { list-style: none; margin-top: 1.4rem; border-top: 1px solid var(--gold); }
+.gets__list li { padding: 1.1rem 0; border-bottom: 1px solid var(--gold); display: grid; gap: .15rem; }
+.gets__list strong { font-weight: 600; color: var(--black); }
+.gets__list span { color: var(--muted); font-size: .95rem; }
+.gets__list em { font-style: normal; font-size: .82rem; color: var(--bronze); font-weight: 500; }
+
 /* ── Курсове и цени ── */
 .courses { display: grid; gap: 1.4rem; margin-top: 2.4rem; align-items: start; }
 .course {
@@ -327,6 +336,8 @@ fieldset.field { border: 0; }
 @media (min-width: 960px) {
   .hero__grid { grid-template-columns: 1.15fr .85fr; }
   .how { grid-template-columns: .9fr 1.1fr; gap: 4rem; }
+  .gets { grid-template-columns: 1.1fr .9fr; gap: 4rem; }
+  .gets__photo { order: 2; }
   .courses { grid-template-columns: repeat(3, 1fr); }
   .proof__grid { grid-template-columns: 1fr 1fr; gap: 4rem; }
   .about { grid-template-columns: .8fr 1.2fr; gap: 4rem; }
