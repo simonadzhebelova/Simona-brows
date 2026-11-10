@@ -1,0 +1,328 @@
+/* Страниците за курсовете (/kurs/, /kurs/zapis/, /kurs/blagodarya/).
+   Цветовете и шрифтовете са тези на главната страница, за да изглеждат като
+   една и съща марка. Различното е, че тук всичко води към едно действие:
+   записване. Затова няма меню. */
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --black:  #000000;
+  --ink:    #333333;
+  --muted:  #6b6158;
+  --gold:   #DCCBB8;
+  --gold2:  #c8ab8a;
+  --bronze: #8a7560;
+  --cream:  #F3EEE8;
+  --cream2: #ede5d8;
+  --white:  #FFFFFF;
+  /* Тъмният чат е като в Instagram: така отзивът на Мария се разпознава като
+     истинско съобщение, а не като текст, написан за страницата. */
+  --ig-bg:     #000000;
+  --ig-bubble: #262626;
+  --ig-text:   #f5f5f5;
+
+  --serif: 'Cormorant Garamond', Georgia, serif;
+  --sans:  'Montserrat', system-ui, sans-serif;
+
+  --gutter: clamp(1.25rem, 5vw, 2.5rem);
+  --space:  clamp(4rem, 10vw, 7rem);
+  --ease:   cubic-bezier(.16, .84, .44, 1);
+}
+
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+
+body {
+  font-family: var(--sans);
+  font-size: 1rem;
+  line-height: 1.7;
+  color: var(--ink);
+  background: var(--white);
+  -webkit-font-smoothing: antialiased;
+}
+
+img { display: block; max-width: 100%; height: auto; }
+a { color: inherit; }
+
+h1, h2, h3 {
+  font-family: var(--serif);
+  font-weight: 500;
+  line-height: 1.12;
+  color: var(--black);
+  letter-spacing: -0.01em;
+}
+h1 { font-size: clamp(2.3rem, 6.4vw, 4rem); }
+h2 { font-size: clamp(1.9rem, 4.6vw, 2.9rem); margin-bottom: 1rem; }
+h3 { font-size: 1.55rem; }
+
+.wrap { max-width: 1120px; margin: 0 auto; padding: 0 var(--gutter); }
+.narrow { max-width: 680px; }
+.section { padding: var(--space) 0; }
+.section--cream { background: var(--cream); }
+.lede { font-size: 1.05rem; color: var(--muted); max-width: 36em; }
+
+/* ── Бутони ── */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center;
+  min-height: 52px; padding: .8rem 1.9rem;
+  font: 600 0.95rem/1.3 var(--sans);
+  text-align: center;
+  letter-spacing: 0.02em;
+  text-decoration: none;
+  border: 1px solid var(--black);
+  border-radius: 2px;
+  cursor: pointer;
+  transition: background-color .25s ease, color .25s ease, transform .2s var(--ease);
+}
+.btn--dark { background: var(--black); color: var(--white); }
+.btn--dark:hover { background: #2a2a2a; }
+.btn--line { background: transparent; color: var(--black); }
+.btn--line:hover { background: var(--black); color: var(--white); }
+.btn--light { background: var(--white); color: var(--black); border-color: var(--white); }
+.btn--light:hover { background: var(--gold); border-color: var(--gold); }
+.btn:active { transform: translateY(1px); }
+.btn:focus-visible, a:focus-visible, summary:focus-visible,
+input:focus-visible, textarea:focus-visible {
+  outline: 2px solid var(--bronze); outline-offset: 3px;
+}
+.btn--wide { width: 100%; }
+
+/* ── Горна лента: само логото и телефонът ── */
+.top {
+  position: sticky; top: 0; z-index: 20;
+  background: rgba(255,255,255,.94);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(220,203,184,.45);
+}
+.top__in {
+  display: flex; align-items: center; justify-content: space-between;
+  height: 64px; max-width: 1120px; margin: 0 auto; padding: 0 var(--gutter);
+}
+.top__logo img { height: 46px; width: auto; }
+.top__link { font-size: .85rem; font-weight: 500; text-decoration: none; color: var(--ink); }
+.top__link:hover { color: var(--black); text-decoration: underline; text-underline-offset: 4px; }
+
+/* ── Начало ── */
+.hero { padding: clamp(2.5rem, 7vw, 5rem) 0 var(--space); background: var(--cream); }
+.hero__grid { display: grid; gap: 2.5rem; align-items: center; }
+.hero__kicker { font-size: .9rem; font-weight: 500; color: var(--bronze); margin-bottom: 1rem; }
+.hero h1 { max-width: 13em; }
+.hero__sub { margin-top: 1.4rem; font-size: 1.08rem; color: var(--muted); max-width: 32em; }
+.hero__cta { display: flex; flex-wrap: wrap; gap: .8rem; margin-top: 2rem; }
+.hero__facts {
+  display: flex; flex-wrap: wrap; gap: .5rem 1.6rem;
+  margin-top: 2rem; font-size: .88rem; color: var(--ink); list-style: none;
+}
+.hero__facts li::before { content: "✓"; color: var(--bronze); margin-right: .45rem; }
+
+/* Място за видео. Празно, докато Симона не запише VSL-а; тогава вътре влиза
+   <video controls playsinline poster="…">. Пропорцията е на телефон (9:16). */
+.video-slot {
+  aspect-ratio: 9 / 16;
+  width: min(100%, 340px);
+  margin: 0 auto;
+  background: var(--cream2);
+  border: 1px solid var(--gold);
+  border-radius: 18px;
+  box-shadow: 0 30px 60px -30px rgba(90, 70, 50, .35);
+  overflow: hidden;
+}
+.video-slot video { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+/* ── За кого ── */
+.who { display: grid; gap: 1.2rem; margin-top: 2.2rem; }
+.who__card { padding: 1.8rem; background: var(--white); border-top: 2px solid var(--gold2); }
+.who__card h3 { margin-bottom: .6rem; }
+.who__card p { color: var(--muted); }
+
+/* ── Как минава (истинска последователност, затова е номерирана) ── */
+.how { display: grid; gap: 2.5rem; align-items: start; }
+.how__photo img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; border-radius: 4px; }
+.steps { list-style: none; counter-reset: step; margin-top: 1.6rem; }
+.steps li {
+  counter-increment: step;
+  position: relative;
+  padding: 0 0 1.5rem 3.2rem;
+}
+.steps li::before {
+  content: counter(step);
+  position: absolute; left: 0; top: -.15rem;
+  width: 2.2rem; height: 2.2rem; border-radius: 50%;
+  border: 1px solid var(--gold2);
+  display: grid; place-items: center;
+  font: 500 1.15rem/1 var(--serif); color: var(--bronze);
+}
+.steps li:not(:last-child)::after {
+  content: ""; position: absolute; left: 1.1rem; top: 2.3rem; bottom: .3rem;
+  width: 1px; background: var(--gold);
+}
+.steps strong { display: block; font-weight: 600; color: var(--black); margin-bottom: .15rem; }
+.steps span { color: var(--muted); font-size: .95rem; }
+
+/* ── Курсове и цени ── */
+.courses { display: grid; gap: 1.4rem; margin-top: 2.4rem; align-items: start; }
+.course {
+  display: flex; flex-direction: column;
+  background: var(--white);
+  border: 1px solid var(--gold);
+  border-radius: 4px;
+  padding: 2rem 1.7rem 1.7rem;
+}
+.course--main { border: 2px solid var(--black); position: relative; }
+.course__tag {
+  position: absolute; top: -.8rem; left: 1.5rem;
+  background: var(--black); color: var(--white);
+  font-size: .78rem; font-weight: 500; padding: .2rem .7rem;
+}
+.course__days { font-size: .88rem; color: var(--bronze); font-weight: 500; }
+.course h3 { margin: .3rem 0 .8rem; }
+.course__price { font: 500 2.6rem/1 var(--serif); color: var(--black); }
+.course__price small { font: 400 .85rem var(--sans); color: var(--muted); margin-left: .3rem; }
+.course__gets { list-style: none; margin: 1.3rem 0; font-size: .92rem; }
+.course__gets li { padding: .35rem 0 .35rem 1.5rem; position: relative; border-bottom: 1px solid var(--cream2); }
+.course__gets li::before { content: "✓"; position: absolute; left: 0; color: var(--bronze); }
+.course details { margin-bottom: 1.4rem; font-size: .9rem; }
+.course summary {
+  cursor: pointer; font-weight: 600; color: var(--black); list-style: none;
+  padding: .5rem 0;
+}
+.course summary::-webkit-details-marker { display: none; }
+.course summary::after { content: " +"; color: var(--bronze); }
+.course details[open] summary::after { content: " −"; }
+.course details h4 { font: 600 .85rem var(--sans); color: var(--bronze); margin: .9rem 0 .3rem; }
+.course details ul { padding-left: 1.1rem; color: var(--muted); }
+.course .btn { margin-top: auto; }
+
+/* ── Отзиви: тъмната ивица ── */
+.proof { background: var(--ig-bg); color: var(--ig-text); }
+.proof h2 { color: var(--white); }
+.proof .lede { color: #b9b2aa; }
+.proof__grid { display: grid; gap: 2.5rem; margin-top: 2.4rem; align-items: start; }
+
+.chat { max-width: 420px; }
+.chat__head { display: flex; align-items: center; gap: .8rem; padding-bottom: 1rem; border-bottom: 1px solid #262626; }
+.chat__avatar {
+  width: 40px; height: 40px; border-radius: 50%;
+  background: linear-gradient(135deg, #c8ab8a, #8a7560);
+  display: grid; place-items: center; font: 600 1rem var(--sans); color: var(--white);
+}
+.chat__who strong { display: block; font-size: .95rem; }
+.chat__who span { font-size: .8rem; color: #a8a8a8; }
+.chat__time { text-align: center; font-size: .75rem; color: #8e8e8e; margin: 1.1rem 0 .8rem; }
+.chat__msgs { display: flex; flex-direction: column; gap: .4rem; }
+.bubble {
+  align-self: flex-start;
+  max-width: 85%;
+  background: var(--ig-bubble);
+  padding: .6rem 1rem;
+  border-radius: 20px;
+  font-size: .98rem; line-height: 1.45;
+}
+.chat__note { margin-top: 1.1rem; font-size: .88rem; color: #a8a8a8; }
+
+/* Единственото движение на страницата: съобщенията пристигат едно по едно,
+   когато ивицата се появи. Без JavaScript или с намалено движение се виждат
+   веднага. */
+.js .chat--animate .bubble { opacity: 0; transform: translateY(10px) scale(.98); }
+.js .chat--animate.is-in .bubble {
+  opacity: 1; transform: none;
+  transition: opacity .45s var(--ease), transform .45s var(--ease);
+}
+.js .chat--animate.is-in .bubble:nth-child(2) { transition-delay: .7s; }
+.js .chat--animate.is-in .bubble:nth-child(3) { transition-delay: 1.5s; }
+.js .chat--animate.is-in .bubble:nth-child(4) { transition-delay: 2.2s; }
+.js .chat--animate.is-in .bubble:nth-child(5) { transition-delay: 2.9s; }
+@media (prefers-reduced-motion: reduce) {
+  .js .chat--animate .bubble { opacity: 1; transform: none; transition: none; }
+}
+
+.quotes { display: grid; gap: 1.6rem; }
+.quote { border-left: 2px solid var(--gold2); padding-left: 1.2rem; }
+.quote p { font: italic 400 1.35rem/1.45 var(--serif); color: var(--white); }
+.quote cite { display: block; margin-top: .5rem; font-style: normal; font-size: .85rem; color: #a8a8a8; }
+
+.photos { display: grid; grid-template-columns: repeat(3, 1fr); gap: .6rem; margin-top: 2.6rem; }
+.photos figure { margin: 0; }
+.photos img { width: 100%; aspect-ratio: 3 / 4; object-fit: cover; border-radius: 3px; }
+.photos figcaption { font-size: .78rem; color: #a8a8a8; margin-top: .4rem; }
+
+/* ── За Симона ── */
+.about { display: grid; gap: 2.5rem; align-items: center; }
+.about__photo img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; border-radius: 4px; }
+.about p + p { margin-top: 1rem; }
+.about p { color: var(--muted); }
+.about__nums { display: flex; flex-wrap: wrap; gap: 1.8rem; margin-top: 1.8rem; }
+.about__nums div { font-size: .85rem; color: var(--muted); }
+.about__nums b { display: block; font: 500 2.2rem/1 var(--serif); color: var(--black); margin-bottom: .2rem; }
+
+/* ── Въпроси ── */
+.faq { margin-top: 2rem; border-top: 1px solid var(--gold); }
+.faq details { border-bottom: 1px solid var(--gold); }
+.faq summary {
+  cursor: pointer; list-style: none;
+  display: flex; justify-content: space-between; gap: 1rem;
+  padding: 1.2rem 0; font-weight: 600; color: var(--black);
+}
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary::after { content: "+"; font: 400 1.4rem/1 var(--serif); color: var(--bronze); }
+.faq details[open] summary::after { content: "−"; }
+.faq details p { padding: 0 0 1.3rem; color: var(--muted); max-width: 38em; }
+
+/* ── Последен призив ── */
+.final { background: var(--black); color: var(--white); text-align: center; }
+.final h2 { color: var(--white); max-width: 16em; margin: 0 auto 1rem; }
+.final p { color: #c9c2ba; max-width: 30em; margin: 0 auto 2rem; }
+
+/* ── Долу ── */
+.foot { padding: 2.5rem 0; font-size: .85rem; color: var(--muted); background: var(--cream); }
+.foot__in { display: flex; flex-wrap: wrap; gap: 1rem 2rem; justify-content: space-between; }
+.foot a { text-decoration: none; }
+.foot a:hover { text-decoration: underline; text-underline-offset: 4px; }
+
+/* ── Формата ── */
+.form-page { background: var(--cream); min-height: calc(100vh - 64px); padding: clamp(2.5rem, 7vw, 4.5rem) 0 var(--space); }
+.form-card { background: var(--white); padding: clamp(1.6rem, 5vw, 2.8rem); margin-top: 2rem; border: 1px solid var(--gold); border-radius: 4px; }
+.field { display: block; margin-bottom: 1.5rem; }
+.field > span, .field legend { display: block; font-weight: 600; color: var(--black); margin-bottom: .55rem; font-size: .95rem; }
+.field .opt { font-weight: 400; color: var(--muted); }
+fieldset.field { border: 0; }
+.field input[type=text], .field input[type=tel], .field textarea {
+  width: 100%; font: 400 1rem var(--sans); color: var(--black);
+  padding: .85rem 1rem; border: 1px solid #cfc3b5; border-radius: 3px; background: var(--white);
+}
+.field textarea { min-height: 96px; resize: vertical; }
+.field input:hover, .field textarea:hover { border-color: var(--bronze); }
+.choices { display: grid; gap: .5rem; }
+.choices--row { grid-template-columns: repeat(auto-fit, minmax(90px, 1fr)); }
+.choice { position: relative; }
+.choice input { position: absolute; opacity: 0; inset: 0; cursor: pointer; }
+.choice span {
+  display: block; padding: .8rem 1rem; border: 1px solid #cfc3b5; border-radius: 3px;
+  font-size: .95rem; transition: border-color .2s ease, background-color .2s ease;
+}
+.choice span small { display: block; color: var(--muted); font-size: .8rem; }
+.choice input:hover + span { border-color: var(--bronze); }
+.choice input:checked + span { border-color: var(--black); background: var(--cream); box-shadow: inset 0 0 0 1px var(--black); }
+.choice input:focus-visible + span { outline: 2px solid var(--bronze); outline-offset: 2px; }
+.form-note { font-size: .82rem; color: var(--muted); margin-top: 1rem; }
+.form-status { margin-top: 1rem; font-size: .95rem; }
+.form-status--err { color: #9b2c2c; }
+.hp { position: absolute; left: -9999px; }
+
+/* ── Благодаря ── */
+.thanks { text-align: center; }
+.thanks .video-slot { margin: 2.2rem auto; }
+.next { text-align: left; max-width: 520px; margin: 0 auto; }
+
+/* ── По-широки екрани ── */
+@media (min-width: 760px) {
+  .who { grid-template-columns: 1fr 1fr; }
+  .photos { gap: 1rem; }
+}
+@media (min-width: 960px) {
+  .hero__grid { grid-template-columns: 1.15fr .85fr; }
+  .how { grid-template-columns: .9fr 1.1fr; gap: 4rem; }
+  .courses { grid-template-columns: repeat(3, 1fr); }
+  .proof__grid { grid-template-columns: 1fr 1fr; gap: 4rem; }
+  .about { grid-template-columns: .8fr 1.2fr; gap: 4rem; }
+}

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Благодаря | Simona Brows</title>
+  <meta name="robots" content="noindex">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/kurs/kurs.css">
+</head>
+<body>
+
+<header class="top">
+  <div class="top__in">
+    <a class="top__logo" href="/" aria-label="Simona Brows, към главната страница">
+      <img src="/brand_asset/f63e19c4-b78f-4928-bca8-ca702080b1ff-removebg-preview.png" alt="Simona Brows">
+    </a>
+    <a class="top__link" href="tel:+359893006402">0893 006 402</a>
+  </div>
+</header>
+
+<main class="form-page">
+  <div class="wrap narrow thanks">
+    <h1 id="thanksTitle">Благодаря, че се записа!</h1>
+    <p class="lede" style="margin:1rem auto 0">Записването ти е при мен. Ще ти се обадя в часа, който си избрала.</p>
+
+    <!-- Тук влиза благодарственото видео на Симона (вертикално). Докато го няма, мястото е празно. -->
+    <div class="video-slot" aria-hidden="true"></div>
+
+    <div class="next">
+      <h2>Какво следва</h2>
+      <ol class="steps">
+        <li><strong>Обаждам ти се</strong><span>Уточняваме кой курс е за теб и избираме дата.</span></li>
+        <li><strong>Идваш в студиото</strong><span>Не е нужно да носиш нищо. Аз осигурявам материалите и моделите.</span></li>
+        <li><strong>Започваш</strong><span>След курса оставам до теб за въпроси, докато правиш първите си стъпки.</span></li>
+      </ol>
+      <p style="margin-top:1rem">Докато чакаш, разгледай работата ми в Instagram.</p>
+      <p style="margin-top:1.4rem"><a class="btn btn--dark" href="https://www.instagram.com/brows.simona/" target="_blank" rel="noopener">Към Instagram</a></p>
+    </div>
+  </div>
+</main>
+
+<script>
+  /* Името от формата, за да е лично. */
+  try {
+    var n = sessionStorage.getItem('kursName');
+    if (n) document.getElementById('thanksTitle').textContent = 'Благодаря, ' + n + '!';
+  } catch (e) {}
+</script>
+</body>
+</html>
