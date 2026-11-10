@@ -107,7 +107,12 @@ input:focus-visible, textarea:focus-visible {
 .hero__grid { display: grid; gap: 2.5rem; align-items: center; }
 .hero__kicker { font-size: .9rem; font-weight: 500; color: var(--bronze); margin-bottom: 1rem; }
 .hero h1 { max-width: 13em; }
-.hero__sub { margin-top: 1.4rem; font-size: 1.08rem; color: var(--muted); max-width: 32em; }
+.hero__without {
+  margin-top: 1.4rem;
+  font: 600 clamp(1.05rem, 2.6vw, 1.25rem)/1.4 var(--sans);
+  color: var(--black);
+}
+.hero__sub { margin-top: .5rem; font-size: 1.08rem; color: var(--muted); max-width: 32em; }
 .hero__cta { display: flex; flex-wrap: wrap; gap: .8rem; margin-top: 2rem; }
 .hero__facts {
   display: flex; flex-wrap: wrap; gap: .5rem 1.6rem;
