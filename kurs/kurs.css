@@ -167,7 +167,7 @@ input:focus-visible, textarea:focus-visible {
 .how__video { position: relative; }
 .how__video video { width: 100%; height: auto; aspect-ratio: 4 / 5; object-fit: cover; border-radius: 4px; display: block; background: var(--cream2); }
 .sound-btn {
-  position: absolute; right: .8rem; bottom: .8rem;
+  position: absolute; right: .8rem; top: .8rem;
   font: 600 .8rem/1 var(--sans); color: var(--black);
   background: rgba(255,255,255,.92); border: 0; border-radius: 999px;
   padding: .65rem 1rem; cursor: pointer;
