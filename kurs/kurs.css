@@ -267,26 +267,17 @@ input:focus-visible, textarea:focus-visible {
 .quote p { font: italic 400 1.35rem/1.45 var(--serif); color: var(--white); }
 .quote cite { display: block; margin-top: .5rem; font-style: normal; font-size: .85rem; color: #a8a8a8; }
 
-.shots { margin-top: 3rem; padding-top: 2rem; border-top: 1px solid #262626; }
-.shots__title { font-size: .9rem; font-weight: 600; color: var(--white); margin-bottom: 1rem; }
-.shots__row { display: grid; grid-template-columns: 1fr 1fr; gap: .8rem; align-items: start; }
-.shots__item { display: block; text-decoration: none; }
+/* Скрийншотите като колони (зидария): различни височини, без празни места. */
+.shots { columns: 1; column-gap: 1.2rem; margin-top: 2.4rem; }
+.shots__item { display: block; break-inside: avoid; margin-bottom: 1.4rem; text-decoration: none; }
 .shots__item img {
-  width: 100%; height: 260px; object-fit: cover; object-position: top;
-  border-radius: 6px; border: 1px solid #333;
+  width: 100%; border-radius: 10px; border: 1px solid #333;
   transition: border-color .2s ease, transform .25s var(--ease);
 }
-.shots__item--wide { grid-column: 1 / -1; }
-.shots__item--wide img { height: auto; object-fit: contain; background: #fff; }
-.shots__item span { display: block; font-size: .78rem; color: #a8a8a8; margin-top: .4rem; }
+.shots__item span { display: block; font-size: .82rem; color: #a8a8a8; margin-top: .5rem; }
 .shots__item:hover img { border-color: var(--gold2); transform: translateY(-2px); }
 .shots__item:focus-visible { outline: 2px solid var(--gold2); outline-offset: 3px; }
-@media (min-width: 760px) {
-  .shots__row { grid-template-columns: 1fr 1fr 1.6fr; }
-  .shots__item--wide { grid-column: auto; }
-  .shots__item img { height: 320px; }
-  .shots__item--wide img { height: auto; }
-}
+@media (min-width: 760px) { .shots { columns: 2; } }
 
 .photos { display: grid; grid-template-columns: repeat(3, 1fr); gap: .6rem; margin-top: 2.6rem; }
 .photos figure { margin: 0; }
