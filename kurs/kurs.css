@@ -165,7 +165,7 @@ input:focus-visible, textarea:focus-visible {
 .steps span { color: var(--muted); font-size: .95rem; }
 
 .how__video { position: relative; }
-.how__video video { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; border-radius: 4px; display: block; background: var(--cream2); }
+.how__video video { width: 100%; height: auto; aspect-ratio: 4 / 5; object-fit: cover; border-radius: 4px; display: block; background: var(--cream2); }
 .sound-btn {
   position: absolute; right: .8rem; bottom: .8rem;
   font: 600 .8rem/1 var(--sans); color: var(--black);
