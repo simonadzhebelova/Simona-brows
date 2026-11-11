@@ -164,6 +164,18 @@ input:focus-visible, textarea:focus-visible {
 .steps strong { display: block; font-weight: 600; color: var(--black); margin-bottom: .15rem; }
 .steps span { color: var(--muted); font-size: .95rem; }
 
+.how__video { position: relative; }
+.how__video video { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; border-radius: 4px; display: block; background: var(--cream2); }
+.sound-btn {
+  position: absolute; right: .8rem; bottom: .8rem;
+  font: 600 .8rem/1 var(--sans); color: var(--black);
+  background: rgba(255,255,255,.92); border: 0; border-radius: 999px;
+  padding: .65rem 1rem; cursor: pointer;
+  transition: background-color .2s ease;
+}
+.sound-btn:hover { background: var(--white); }
+.sound-btn:focus-visible { outline: 2px solid var(--bronze); outline-offset: 2px; }
+
 /* ── Какво получаваш ── */
 .gets { display: grid; gap: 2.5rem; align-items: start; }
 .gets__photo img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; border-radius: 4px; }

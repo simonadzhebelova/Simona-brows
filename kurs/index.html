@@ -63,8 +63,14 @@
   <!-- Как минава обучението -->
   <section class="section section--cream">
     <div class="wrap how">
-      <div class="how__photo">
-        <img src="/kurs/img/obuchenie.jpg" alt="Симона показва техниката на курсистка върху модел" loading="lazy" width="720" height="1280">
+      <div class="how__photo how__video">
+        <!-- Клипът от обучението (Remotion: SimonaObuchenie). Браузърите пускат
+             видео сами само без звук, затова е без звук и в цикъл, а бутонът
+             пуска музиката. -->
+        <video id="howVideo" src="/kurs/img/obuchenie.mp4" poster="/kurs/img/obuchenie-poster.jpg"
+               autoplay muted loop playsinline preload="metadata" width="720" height="900"
+               aria-label="Кадри от обучение: Симона показва техниката, курсистката работи върху модел"></video>
+        <button class="sound-btn" id="howSound" type="button" aria-pressed="false">Пусни звука</button>
       </div>
       <div>
         <h2>Как минава обучението</h2>
@@ -356,6 +362,19 @@
   </div>
 </footer>
 
+<script>
+  /* Звукът на клипа от обучението. */
+  (function () {
+    var v = document.getElementById('howVideo'), btn = document.getElementById('howSound');
+    if (!v || !btn) return;
+    btn.addEventListener('click', function () {
+      v.muted = !v.muted;
+      if (!v.muted) { v.currentTime = 0; v.play(); }
+      btn.textContent = v.muted ? 'Пусни звука' : 'Спри звука';
+      btn.setAttribute('aria-pressed', String(!v.muted));
+    });
+  })();
+</script>
 <script>
   /* Съобщенията на Мария пристигат едно по едно, когато чатът се появи. */
   (function () {
