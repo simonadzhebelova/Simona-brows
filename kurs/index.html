@@ -241,58 +241,22 @@
       <h2>Какво казват курсистките</h2>
       <p class="lede">Съобщенията са истински, показани с тяхно съгласие.</p>
 
-      <div class="proof__grid">
-        <div class="chat chat--animate" id="chat">
-          <div class="chat__head">
-            <div class="chat__avatar" aria-hidden="true">М</div>
-            <div class="chat__who"><strong>Мария Шикова</strong><span>shikova.lashes</span></div>
-          </div>
-          <p class="chat__time">Ден след курса</p>
-          <div class="chat__msgs">
-            <p class="bubble">Мони здравей</p>
-            <p class="bubble">Днес имах едно ламиниране и момичето ме помоли да изчистя горна устна с конец</p>
-            <p class="bubble">Останах много приятно изненадана от себе си</p>
-            <p class="bubble">Без никакви затруднения</p>
-            <p class="bubble">И взех бял конец, за да виждам косъмчетата които хващам</p>
-          </div>
-          <p class="chat__note">Мария прави мигли и ламиниране. След курса добави и епилацията с конец.</p>
-        </div>
-
-        <div class="quotes">
-          <blockquote class="quote">
-            <p>„Научих много и се чувствам много по-уверена благодарение на теб! Благодаря ти за всичко, вниманието към детайла и истинската страст към това, което правиш.“</p>
-            <cite>Мария Шикова, курсистка</cite>
-          </blockquote>
-          <blockquote class="quote">
-            <p>„Не беше предизвикателство, а истинско приключение. Удоволствие, удовлетворение и щастие.“</p>
-            <cite>Курсистка, във Facebook</cite>
-          </blockquote>
-          <blockquote class="quote">
-            <p>„Само няколко дни след курса вече имах първите си доволни клиентки.“</p>
-            <cite>Йоана Йотова, курсистка</cite>
-          </blockquote>
-        </div>
-      </div>
-
-      <!-- Оригиналните скрийншоти: доказателство, че отзивите са истински.
-           Изрязани са лентата на телефона, полето за писане и (при Facebook)
-           другите снимки от телефона. Натискане отваря снимката в цял размер. -->
+      <!-- Само оригиналните скрийншоти: истинските съобщения казват повече от
+           преписан текст. Изрязани са лентата на телефона, полето за писане и
+           (при Facebook) другите снимки от телефона. Натискане отваря снимката. -->
       <div class="shots">
-        <p class="shots__title">Оригиналните съобщения</p>
-        <div class="shots__row">
-          <a class="shots__item" href="/kurs/img/otziv-maria-1.jpg" target="_blank" rel="noopener">
-            <img src="/kurs/img/otziv-maria-1.jpg" alt="Скрийншот: отзивът на Мария в Instagram" loading="lazy" width="946" height="1340">
-            <span>Мария, след курса</span>
-          </a>
-          <a class="shots__item" href="/kurs/img/otziv-maria-2.jpg" target="_blank" rel="noopener">
-            <img src="/kurs/img/otziv-maria-2.jpg" alt="Скрийншот: Мария пише за първата си клиентка с конец" loading="lazy" width="946" height="1240">
-            <span>Мария, на следващия ден</span>
-          </a>
-          <a class="shots__item shots__item--wide" href="/kurs/img/otziv-facebook.jpg" target="_blank" rel="noopener">
-            <img src="/kurs/img/otziv-facebook.jpg" alt="Скрийншот: отзив на курсистка във Facebook" loading="lazy" width="946" height="306">
-            <span>Курсистка, във Facebook</span>
-          </a>
-        </div>
+        <a class="shots__item" href="/kurs/img/otziv-maria-1.jpg" target="_blank" rel="noopener">
+          <img src="/kurs/img/otziv-maria-1.jpg" alt="Мария в Instagram: „Благодаря ти за търпението, професионализма и ценните знания… Научих много и се чувствам много по-уверена благодарение на теб!“" loading="lazy" width="946" height="812">
+          <span>Мария Шикова, след курса</span>
+        </a>
+        <a class="shots__item" href="/kurs/img/otziv-facebook.jpg" target="_blank" rel="noopener">
+          <img src="/kurs/img/otziv-facebook.jpg" alt="Курсистка във Facebook: „Не беше предизвикателство, а истинско приключение. Удоволствие, удовлетворение и щастие.“" loading="lazy" width="946" height="306">
+          <span>Курсистка, във Facebook</span>
+        </a>
+        <a class="shots__item" href="/kurs/img/otziv-maria-2.jpg" target="_blank" rel="noopener">
+          <img src="/kurs/img/otziv-maria-2.jpg" alt="Мария на следващия ден: „Днес имах едно ламиниране и момичето ме помоли да изчистя горна устна с конец. Останах много приятно изненадана от себе си. Без никакви затруднения.“" loading="lazy" width="946" height="1240">
+          <span>Мария, на следващия ден: първата ѝ клиентка с конец</span>
+        </a>
       </div>
 
       <div class="photos">
@@ -394,19 +358,6 @@
       btn.textContent = v.muted ? 'Пусни звука' : 'Спри звука';
       btn.setAttribute('aria-pressed', String(!v.muted));
     });
-  })();
-</script>
-<script>
-  /* Съобщенията на Мария пристигат едно по едно, когато чатът се появи. */
-  (function () {
-    var chat = document.getElementById('chat');
-    if (!chat || !('IntersectionObserver' in window)) { if (chat) chat.classList.add('is-in'); return; }
-    var io = new IntersectionObserver(function (entries) {
-      entries.forEach(function (e) {
-        if (e.isIntersecting) { chat.classList.add('is-in'); io.disconnect(); }
-      });
-    }, { threshold: 0.2 });
-    io.observe(chat);
   })();
 </script>
 </body>
