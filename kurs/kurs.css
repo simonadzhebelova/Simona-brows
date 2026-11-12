@@ -278,6 +278,7 @@ input:focus-visible, textarea:focus-visible {
 .shots__item:hover img { border-color: var(--gold2); transform: translateY(-2px); }
 .shots__item:focus-visible { outline: 2px solid var(--gold2); outline-offset: 3px; }
 @media (min-width: 760px) { .shots { columns: 2; } }
+@media (min-width: 1000px) { .shots { columns: 3; } }
 
 .photos { display: grid; grid-template-columns: repeat(3, 1fr); gap: .6rem; margin-top: 2.6rem; }
 .photos figure { margin: 0; }
