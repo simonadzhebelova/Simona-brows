@@ -56,6 +56,15 @@
       </fieldset>
 
       <fieldset class="field">
+        <legend>Къде ти е удобно?</legend>
+        <div class="choices choices--row">
+          <label class="choice"><input type="radio" name="city" value="София" required><span>София</span></label>
+          <label class="choice"><input type="radio" name="city" value="Сандански"><span>Сандански</span></label>
+          <label class="choice"><input type="radio" name="city" value="Все едно"><span>Все едно</span></label>
+        </div>
+      </fieldset>
+
+      <fieldset class="field">
         <legend>Имаш ли опит?</legend>
         <div class="choices choices--row">
           <label class="choice"><input type="radio" name="experience" value="Започвам от нулата" required><span>Започвам от нулата</span></label>
@@ -109,8 +118,9 @@
       var name = form.elements.name.value.trim();
       var course = form.elements.course.value;
       var callTime = form.elements.call_time.value;
-      /* Темата на имейла: кой е, за кой курс и кога да звънне. */
-      form.elements.subject.value = '🔔 Записване: ' + name + ', ' + course.replace(/ \(.*\)$/, '') + ', обаждане ' + callTime.toLowerCase();
+      var city = form.elements.city.value;
+      /* Темата на имейла: кой е, за кой курс, в кой град и кога да звънне. */
+      form.elements.subject.value = '🔔 Записване: ' + name + ', ' + course.replace(/ \(.*\)$/, '') + ', ' + city + ', обаждане ' + callTime.toLowerCase();
 
       var btn = form.querySelector('button[type=submit]');
       btn.disabled = true;
