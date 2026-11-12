@@ -60,7 +60,6 @@
         <div class="choices choices--row">
           <label class="choice"><input type="radio" name="city" value="София" required><span>София</span></label>
           <label class="choice"><input type="radio" name="city" value="Сандански"><span>Сандански</span></label>
-          <label class="choice"><input type="radio" name="city" value="Все едно"><span>Все едно</span></label>
         </div>
       </fieldset>
 
@@ -69,15 +68,6 @@
         <div class="choices choices--row">
           <label class="choice"><input type="radio" name="experience" value="Започвам от нулата" required><span>Започвам от нулата</span></label>
           <label class="choice"><input type="radio" name="experience" value="Вече работя в бюти сферата"><span>Вече работя в бюти сферата</span></label>
-        </div>
-      </fieldset>
-
-      <fieldset class="field">
-        <legend>Кога да ти се обадя?</legend>
-        <div class="choices choices--row">
-          <label class="choice"><input type="radio" name="call_time" value="Сутрин" required><span>Сутрин</span></label>
-          <label class="choice"><input type="radio" name="call_time" value="Обед"><span>Обед</span></label>
-          <label class="choice"><input type="radio" name="call_time" value="Вечер"><span>Вечер</span></label>
         </div>
       </fieldset>
 
@@ -117,10 +107,9 @@
 
       var name = form.elements.name.value.trim();
       var course = form.elements.course.value;
-      var callTime = form.elements.call_time.value;
       var city = form.elements.city.value;
-      /* Темата на имейла: кой е, за кой курс, в кой град и кога да звънне. */
-      form.elements.subject.value = '🔔 Записване: ' + name + ', ' + course.replace(/ \(.*\)$/, '') + ', ' + city + ', обаждане ' + callTime.toLowerCase();
+      /* Темата на имейла: кой е, за кой курс и в кой град. */
+      form.elements.subject.value = '🔔 Записване: ' + name + ', ' + course.replace(/ \(.*\)$/, '') + ', ' + city;
 
       var btn = form.querySelector('button[type=submit]');
       btn.disabled = true;
