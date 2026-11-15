@@ -51,6 +51,12 @@
     </div>
   </section>
 
+  <!-- Лента с направленията: тече бавно, за да не е всичко неподвижно.
+       Съдържанието е два пъти, за да се върти без шев. -->
+  <div class="ribbon" role="img" aria-label="Ламиниране на мигли, Ламиниране на вежди, Епилация с конец, Архитектура на вежди, Колористика, Удостоверение от МОН">
+    <div class="ribbon__track"><div aria-hidden="true"><span>Ламиниране на мигли</span><span>Ламиниране на вежди</span><span>Епилация с конец</span><span>Архитектура на вежди</span><span>Колористика</span><span>Удостоверение от МОН</span></div><div aria-hidden="true"><span>Ламиниране на мигли</span><span>Ламиниране на вежди</span><span>Епилация с конец</span><span>Архитектура на вежди</span><span>Колористика</span><span>Удостоверение от МОН</span></div></div>
+  </div>
+
   <!-- За кого е: двата вида курсистки, които виждаме в отзивите -->
   <section class="section">
     <div class="wrap">
@@ -295,8 +301,8 @@
         <p>Аз съм Симона Джебелова. Правя вежди, ламиниране на мигли и вежди и епилация с конец, и преподавам същите направления.</p>
         <p>Освен работата с клиентки открих и друга голяма страст: преподаването. Споделям знанията и опита си с жени, които правят първите си стъпки или искат да надградят уменията си. За мен обучението не свършва с последния ден, оставам до своите курсистки и след това.</p>
         <div class="about__nums">
-          <div><b>8+</b>години опит</div>
-          <div><b>2000+</b>клиентки</div>
+          <div><b data-count="8" data-suffix="+">8+</b>години опит</div>
+          <div><b data-count="2000" data-suffix="+">2000+</b>клиентки</div>
           <div><b>МОН</b>удостоверение</div>
         </div>
       </div>
@@ -355,6 +361,11 @@
   </div>
 </footer>
 
+<!-- Бутонът за записване, винаги под палеца на телефон (виж .sticky-cta). -->
+<div class="sticky-cta" id="stickyCta">
+  <a class="btn btn--dark" href="/kurs/zapis/">Запиши се за курс</a>
+</div>
+
 <script>
   /* Звукът на клипа от обучението. */
   (function () {
@@ -366,6 +377,66 @@
       btn.textContent = v.muted ? 'Пусни звука' : 'Спри звука';
       btn.setAttribute('aria-pressed', String(!v.muted));
     });
+  })();
+
+  /* Движението при скролване (стиловете са в kurs.css, „Движение“). */
+  (function () {
+    if (!('IntersectionObserver' in window)) return;
+    var still = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    // Кое изплува; в една група поредността (--i) дава лекото закъснение.
+    var groups = [
+      '.section h2', '.section .lede', '.who__card', '.how__photo', '.steps li',
+      '.gets__photo', '.gets__list li', '.course', '.shots__item', '.photos figure',
+      '.about__photo', '.about h2 ~ *', '.faq details', '.final .wrap > *'
+    ];
+    var items = [];
+    groups.forEach(function (sel) {
+      var byParent = new Map();
+      document.querySelectorAll(sel).forEach(function (el) {
+        if (el.hasAttribute('data-reveal')) return;
+        var n = byParent.get(el.parentNode) || 0;
+        byParent.set(el.parentNode, n + 1);
+        el.setAttribute('data-reveal', '');
+        el.style.setProperty('--i', Math.min(n, 5));
+        items.push(el);
+      });
+    });
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (!e.isIntersecting) return;
+        e.target.classList.add('is-in');
+        io.unobserve(e.target);
+      });
+    }, { rootMargin: '0px 0px -8% 0px', threshold: 0.12 });
+    items.forEach(function (el) { io.observe(el); });
+
+    // Числата при „Коя съм аз“ се броят от нула, когато се покажат.
+    var nio = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (!e.isIntersecting) return;
+        nio.unobserve(e.target);
+        if (still) return;
+        var el = e.target, to = +el.dataset.count, suf = el.dataset.suffix || '';
+        var t0 = null, dur = 1600;
+        requestAnimationFrame(function step(t) {
+          if (t0 === null) t0 = t;
+          var k = Math.min(1, (t - t0) / dur);
+          el.textContent = Math.round(to * (1 - Math.pow(1 - k, 3))) + suf;
+          if (k < 1) requestAnimationFrame(step);
+        });
+      });
+    }, { threshold: 0.6 });
+    document.querySelectorAll('[data-count]').forEach(function (el) { nio.observe(el); });
+
+    // Лентата с бутона: щом началото излезе от екрана; скрива се при последния призив.
+    var bar = document.getElementById('stickyCta'), hero = document.querySelector('.hero'), fin = document.querySelector('.final');
+    if (bar && hero && fin) {
+      var heroOut = false, finIn = false;
+      var upd = function () { bar.classList.toggle('is-on', heroOut && !finIn); };
+      new IntersectionObserver(function (e) { heroOut = !e[0].isIntersecting; upd(); }).observe(hero);
+      new IntersectionObserver(function (e) { finIn = e[0].isIntersecting; upd(); }).observe(fin);
+    }
   })();
 </script>
 </body>
