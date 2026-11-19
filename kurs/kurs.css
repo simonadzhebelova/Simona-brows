@@ -460,3 +460,41 @@ fieldset.field { border: 0; }
   .course, .gets__photo img, .about__photo img, .photos img { transition: none; }
   .course.is-in:hover, .gets__photo:hover img, .about__photo:hover img, .photos figure:hover img { transform: none; }
 }
+
+/* ══ Бисквитки и поверителност ══════════════════════════════════════════ */
+
+/* Банерът: отдолу, в цветовете на сайта. Двата бутона са еднакво видими —
+   законът не позволява отказът да е по-труден от приемането. */
+.consent {
+  position: fixed; z-index: 40; left: 50%; bottom: 1rem;
+  width: min(calc(100% - 2rem), 620px);
+  transform: translate(-50%, 140%); transition: transform .45s var(--ease);
+  background: var(--white); border: 1px solid var(--gold); border-radius: 6px;
+  box-shadow: 0 24px 60px -24px rgba(60,45,30,.45);
+  padding: 1.2rem 1.3rem;
+}
+.consent.is-on { transform: translate(-50%, 0); }
+.consent__text { font-size: .9rem; color: var(--ink); line-height: 1.55; }
+.consent__text a { color: var(--bronze); text-underline-offset: 3px; }
+.consent__btns { display: flex; gap: .6rem; margin-top: 1rem; }
+.consent__btns .btn { flex: 1; min-height: 46px; padding: .6rem 1rem; font-size: .88rem; }
+@media (prefers-reduced-motion: reduce) { .consent { transition: none; } }
+
+.link-btn {
+  background: none; border: 0; padding: 0; cursor: pointer;
+  font: inherit; color: inherit; text-decoration: underline; text-underline-offset: 4px;
+}
+.foot .link-btn { text-decoration: none; }
+.foot .link-btn:hover { text-decoration: underline; }
+
+/* Политиката */
+.legal { background: var(--white); }
+.legal h1 { font-size: clamp(2rem, 5vw, 2.8rem); margin-bottom: .6rem; }
+.legal h2 { font-size: clamp(1.45rem, 3.4vw, 1.8rem); margin: 2.4rem 0 .7rem; }
+.legal p, .legal li { color: var(--ink); }
+.legal p + p { margin-top: .8rem; }
+.legal ul { margin: .6rem 0 0 1.2rem; }
+.legal li { margin-bottom: .45rem; }
+.legal a { color: var(--bronze); text-underline-offset: 3px; }
+.legal code { font-size: .85em; background: var(--cream); padding: .05rem .35rem; border-radius: 3px; }
+.foot--slim { padding: 1.6rem 0; }
