@@ -59,6 +59,16 @@
     var n = sessionStorage.getItem('kursName');
     if (n) document.getElementById('thanksTitle').textContent = 'Благодаря, ' + n + '!';
   } catch (e) {}
+
+  /* Събитие за рекламите — изпраща се само ако е прието в банера (kurs/consent.js). */
+  function track(e, p) { (window._stq = window._stq || []).push([e, p]); if (window.siteTrackFlush) window.siteTrackFlush(); }
+  try {
+    var lead = sessionStorage.getItem('kursLead');
+    if (lead) {
+      sessionStorage.removeItem('kursLead');
+      track('Lead', { content_name: lead });
+    }
+  } catch (e) {}
 </script>
 </body>
 </html>

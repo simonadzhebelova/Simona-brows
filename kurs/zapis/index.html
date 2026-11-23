@@ -127,6 +127,8 @@
         .then(function (r) {
           if (!r.ok) throw new Error(r.status);
           try { sessionStorage.setItem('kursName', name.split(' ')[0]); } catch (err) {}
+          // „Благодаря“ отчита записването само ако е дошла оттук след истинско изпращане
+          try { sessionStorage.setItem('kursLead', course.replace(/ \(.*\)$/, '')); } catch (err) {}
           location.href = '/kurs/blagodarya/';
         })
         .catch(function () {
@@ -135,6 +137,10 @@
         });
     });
   })();
+
+  /* Събитие за рекламите — изпраща се само ако е прието в банера (kurs/consent.js). */
+  function track(e, p) { (window._stq = window._stq || []).push([e, p]); if (window.siteTrackFlush) window.siteTrackFlush(); }
+  track('InitiateCheckout', { content_name: 'Форма за записване' });
 </script>
 </body>
 </html>

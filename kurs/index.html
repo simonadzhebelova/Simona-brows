@@ -368,6 +368,21 @@
 </div>
 
 <script>
+  /* Събитие за рекламите — изпраща се само ако е прието в банера (kurs/consent.js). */
+  function track(e, p) { (window._stq = window._stq || []).push([e, p]); if (window.siteTrackFlush) window.siteTrackFlush(); }
+
+  /* Изгледала е поне половината от видеото — най-силният знак за интерес преди формата. */
+  (function () {
+    var v = document.querySelector('.video-slot video'), sent = false;
+    if (!v) return;
+    v.addEventListener('timeupdate', function () {
+      if (!sent && v.duration && v.currentTime / v.duration >= 0.5) {
+        sent = true;
+        track('ViewContent', { content_name: 'VSL 50%' });
+      }
+    });
+  })();
+
   /* Звукът на клипа от обучението. */
   (function () {
     var v = document.getElementById('howVideo'), btn = document.getElementById('howSound');

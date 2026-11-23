@@ -9,7 +9,7 @@
    празен, на сайта няма рекламни бисквитки и не питаме за тях. За преглед на
    банера преди това: добави ?cookies към адреса. */
 (function () {
-  var PIXEL_ID = ''; // попълва се, когато Симона създаде пиксела в Meta Events Manager
+  var PIXEL_ID = '1354427722794407'; // „Brows Simona Пиксел на Facebook“ в бизнеса на Симона
   var KEY = 'cookieConsent';
   var MAX_AGE = 1000 * 60 * 60 * 24 * 182; // питаме отново след ~6 месеца
   var preview = /[?&]cookies\b/.test(location.search);
@@ -37,13 +37,18 @@
     }(window, document, 'script', 'https://connect.facebook.net/en_US/fbevents.js');
     window.fbq('init', PIXEL_ID);
     window.fbq('track', 'PageView');
-    document.dispatchEvent(new Event('pixel:ready'));
+    flush();
   }
 
-  // Страниците отчитат събития през siteTrack(…): без съгласие не прави нищо.
-  window.siteTrack = function (event, params) {
-    if (pixelLoaded && window.fbq) window.fbq('track', event, params || {});
-  };
+  // Страниците слагат събитията си в опашка window._stq (виж track() в тях) —
+  // често преди този файл да е зареден. Изпращат се само след съгласие;
+  // без съгласие опашката просто остава неизпратена.
+  function flush() {
+    if (!pixelLoaded || !window.fbq) return;
+    var q = window._stq || [];
+    while (q.length) { var e = q.shift(); window.fbq('track', e[0], e[1] || {}); }
+  }
+  window.siteTrackFlush = flush;
 
   var banner;
   function close() { if (banner) { banner.classList.remove('is-on'); setTimeout(function () { banner.hidden = true; }, 400); } }
